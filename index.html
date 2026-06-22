@@ -1,0 +1,603 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Donut Circle Sweet</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Fredoka+One&family=Nunito:wght@400;600;700;800&display=swap" rel="stylesheet"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html { scroll-behavior: smooth; }
+    body { font-family: 'Nunito', sans-serif; background: #6EC6E6; color: #1a1a1a; }
+
+    /* ── PROMO BAR ── */
+    .promo-bar {
+      background: linear-gradient(90deg, #C2185B, #E91E8C);
+      color: #fff;
+      text-align: center;
+      padding: 11px 20px;
+      font-size: 14px;
+      font-weight: 700;
+      letter-spacing: 0.4px;
+    }
+
+    /* ── NAV ── */
+    nav {
+      display: flex;
+      justify-content: flex-end;
+      align-items: center;
+      padding: 18px 48px 10px;
+      gap: 32px;
+    }
+    nav a {
+      color: #C2185B;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: color 0.2s;
+    }
+    nav a:hover { color: #880E4F; }
+    .cart-icon { position: relative; cursor: pointer; }
+    .cart-icon svg { width: 22px; height: 22px; fill: none; stroke: #C2185B; stroke-width: 2; }
+    .cart-badge {
+      position: absolute;
+      top: -6px; right: -8px;
+      background: #C2185B;
+      color: #fff;
+      border-radius: 50%;
+      width: 16px; height: 16px;
+      font-size: 10px; font-weight: 800;
+      display: flex; align-items: center; justify-content: center;
+    }
+
+    /* ── HERO ── */
+    .hero {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      min-height: 440px;
+      padding: 0 48px 60px;
+      align-items: center;
+      gap: 0;
+    }
+    .hero-left { position: relative; z-index: 2; }
+    .hero-title-row {
+      display: flex;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 4px;
+    }
+    .hero-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 76px;
+      line-height: 1.05;
+      color: #1a1a1a;
+      letter-spacing: -1px;
+    }
+    .hero-sub {
+      font-size: 14px;
+      color: #333;
+      line-height: 1.7;
+      max-width: 280px;
+      margin-top: 18px;
+      font-weight: 600;
+    }
+    .hero-btn {
+      display: inline-block;
+      margin-top: 26px;
+      background: #C2185B;
+      color: #fff;
+      padding: 13px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      border: none;
+      cursor: pointer;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .hero-btn:hover { background: #880E4F; transform: scale(1.04); }
+    .hero-stats { display: flex; gap: 36px; margin-top: 30px; }
+    .stat-num {
+      font-family: 'Fredoka One', cursive;
+      font-size: 24px;
+      color: #1a1a1a;
+    }
+    .stat-label { font-size: 12px; color: #555; font-weight: 700; }
+
+    .hero-right {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .hero-svg-wrap { position: relative; width: 340px; height: 380px; }
+    .hero-svg-wrap svg { filter: drop-shadow(0 8px 18px rgba(0,0,0,0.18)); }
+
+    /* ── FLOATING DOTS ANIMATION ── */
+    .dot-float { animation: floatDot 4s ease-in-out infinite; }
+    .dot-float:nth-child(2n) { animation-duration: 5.5s; }
+    .dot-float:nth-child(3n) { animation-duration: 3.8s; animation-delay: 1s; }
+    @keyframes floatDot { 0%,100%{transform:translateY(0)} 50%{transform:translateY(-8px)} }
+
+    /* ── BESTSELLERS ── */
+    .bestsellers {
+      background: #fff;
+      padding: 70px 48px 60px;
+    }
+    .section-header { text-align: center; margin-bottom: 40px; }
+    .section-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 40px;
+      color: #1a1a1a;
+    }
+    .badge {
+      display: inline-block;
+      background: #C2185B;
+      color: #fff;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 3px 12px;
+      border-radius: 50px;
+      margin-left: 10px;
+      vertical-align: middle;
+      letter-spacing: 1px;
+    }
+    .section-sub { color: #999; font-size: 14px; margin-top: 8px; font-weight: 600; }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 28px;
+    }
+    .card {
+      background: #fff;
+      border-radius: 22px;
+      box-shadow: 0 4px 24px rgba(0,0,0,0.10);
+      overflow: hidden;
+      transition: transform 0.22s, box-shadow 0.22s;
+      cursor: pointer;
+    }
+    .card:hover { transform: translateY(-7px); box-shadow: 0 12px 36px rgba(0,0,0,0.15); }
+    .card.featured { border: 2.5px solid #C2185B; }
+    .card-label {
+      background: #C2185B;
+      color: #fff;
+      text-align: center;
+      font-size: 11px;
+      font-weight: 800;
+      padding: 6px;
+      letter-spacing: 1.5px;
+    }
+    .card-img {
+      width: 100%;
+      height: 170px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      background: #FFF0F5;
+    }
+    .card-body { padding: 18px; }
+    .card-name {
+      font-family: 'Fredoka One', cursive;
+      font-size: 22px;
+      color: #1a1a1a;
+    }
+    .card-desc { font-size: 12px; color: #999; font-weight: 600; margin-top: 4px; }
+    .stars { color: #F9A825; font-size: 13px; margin-top: 6px; }
+    .stars span { color: #bbb; }
+    .card-footer {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin-top: 14px;
+    }
+    .card-price { color: #C2185B; font-weight: 800; font-size: 18px; }
+    .add-btn {
+      background: #C2185B;
+      color: #fff;
+      border: none;
+      border-radius: 50px;
+      padding: 8px 20px;
+      font-size: 13px;
+      font-weight: 700;
+      cursor: pointer;
+      font-family: 'Nunito', sans-serif;
+      transition: background 0.2s, transform 0.12s;
+    }
+    .add-btn:hover { background: #880E4F; transform: scale(1.06); }
+
+    /* ── WHY US ── */
+    .why-section {
+      background: #FFF0F5;
+      padding: 70px 48px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 30px;
+    }
+    .why-card {
+      background: #fff;
+      border-radius: 20px;
+      padding: 32px 24px;
+      text-align: center;
+      box-shadow: 0 2px 14px rgba(0,0,0,0.07);
+      transition: transform 0.2s;
+    }
+    .why-card:hover { transform: translateY(-5px); }
+    .why-icon { font-size: 40px; margin-bottom: 16px; }
+    .why-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 20px;
+      color: #C2185B;
+      margin-bottom: 10px;
+    }
+    .why-text { font-size: 13px; color: #666; line-height: 1.7; font-weight: 600; }
+
+    /* ── CUSTOM BANNER ── */
+    .custom-banner {
+      background: linear-gradient(135deg, #6EC6E6 0%, #4FC3F7 50%, #81D4FA 100%);
+      padding: 70px 48px;
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px;
+      align-items: center;
+    }
+    .custom-title {
+      font-family: 'Fredoka One', cursive;
+      font-size: 44px;
+      color: #1a1a1a;
+      line-height: 1.1;
+    }
+    .custom-desc { font-size: 15px; color: #333; font-weight: 600; line-height: 1.7; margin-top: 14px; }
+    .custom-btn {
+      display: inline-block;
+      margin-top: 24px;
+      background: #1a1a1a;
+      color: #fff;
+      padding: 13px 32px;
+      border-radius: 50px;
+      font-size: 15px;
+      font-weight: 700;
+      text-decoration: none;
+      transition: background 0.2s, transform 0.15s;
+    }
+    .custom-btn:hover { background: #333; transform: scale(1.04); }
+    .custom-right { display: flex; justify-content: center; align-items: center; flex-wrap: wrap; gap: 18px; }
+    .flavor-pill {
+      background: rgba(255,255,255,0.85);
+      border-radius: 50px;
+      padding: 10px 22px;
+      font-family: 'Fredoka One', cursive;
+      font-size: 16px;
+      color: #C2185B;
+      box-shadow: 0 3px 12px rgba(0,0,0,0.10);
+    }
+
+    /* ── FOOTER ── */
+    footer {
+      background: #1a1a1a;
+      color: #fff;
+      text-align: center;
+      padding: 32px 48px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+    footer a { color: #F48FB1; text-decoration: none; margin: 0 8px; }
+    footer a:hover { color: #fff; }
+    footer .brand { color: #C2185B; }
+
+    /* ── RESPONSIVE ── */
+    @media (max-width: 768px) {
+      nav { justify-content: center; flex-wrap: wrap; gap: 16px; padding: 14px 20px; }
+      .hero { grid-template-columns: 1fr; padding: 20px 20px 40px; text-align: center; }
+      .hero-title { font-size: 52px; }
+      .hero-right { margin-top: 30px; }
+      .hero-title-row { justify-content: center; }
+      .hero-stats { justify-content: center; }
+      .hero-sub { margin: 14px auto 0; }
+      .cards-grid { grid-template-columns: 1fr; gap: 20px; }
+      .bestsellers, .why-section, .custom-banner { padding: 40px 20px; }
+      .why-section { grid-template-columns: 1fr; }
+      .custom-banner { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+  <!-- PROMO BAR -->
+  <div class="promo-bar">
+    🍩 FREE DELIVERY on orders over ฿299 &nbsp;·&nbsp; Use code <strong>SWEETDAY</strong>
+  </div>
+
+  <!-- NAVIGATION -->
+  <nav>
+    <a href="#home">Home</a>
+    <a href="#shop">Shop</a>
+    <a href="#story">Our Story</a>
+    <a href="#custom">Custom</a>
+    <a href="#orders">Orders</a>
+    <a href="#contact">Contact</a>
+    <div class="cart-icon" title="Cart">
+      <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+        <path stroke-linecap="round" stroke-linejoin="round"
+          d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2 9m12-9l2 9M9 21a1 1 0 100-2 1 1 0 000 2zm6 0a1 1 0 100-2 1 1 0 000 2z"/>
+      </svg>
+      <span class="cart-badge">3</span>
+    </div>
+  </nav>
+
+  <!-- HERO -->
+  <section class="hero" id="home">
+    <div class="hero-left">
+      <div class="hero-title-row">
+        <!-- Mini donut left -->
+        <svg width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 4px 8px rgba(0,0,0,0.18))">
+          <ellipse cx="27" cy="27" rx="25" ry="25" fill="#F48FB1"/>
+          <ellipse cx="27" cy="27" rx="10" ry="10" fill="#6EC6E6"/>
+          <circle class="dot-float" cx="18" cy="12" r="3" fill="#fff" opacity="0.9"/>
+          <circle class="dot-float" cx="32" cy="10" r="2.2" fill="#F9A825"/>
+          <circle class="dot-float" cx="40" cy="22" r="2.5" fill="#80DEEA"/>
+          <circle class="dot-float" cx="14" cy="22" r="2" fill="#A5D6A7"/>
+        </svg>
+        <h1 class="hero-title">Donut</h1>
+        <!-- Mini donut right -->
+        <svg width="54" height="54" viewBox="0 0 54 54" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 4px 8px rgba(0,0,0,0.18))">
+          <ellipse cx="27" cy="27" rx="25" ry="25" fill="#80DEEA"/>
+          <ellipse cx="27" cy="27" rx="10" ry="10" fill="#6EC6E6"/>
+          <circle class="dot-float" cx="18" cy="12" r="3" fill="#fff" opacity="0.9"/>
+          <circle class="dot-float" cx="34" cy="10" r="2" fill="#F9A825"/>
+          <circle class="dot-float" cx="40" cy="24" r="2.5" fill="#F48FB1"/>
+        </svg>
+      </div>
+      <h1 class="hero-title">Circle Sweet</h1>
+      <p class="hero-sub">Freshly baked, soft, and delicious! Treat yourself to our premium donuts and make your day special.</p>
+      <a href="#shop" class="hero-btn">Shop Now 🍩</a>
+      <div class="hero-stats">
+        <div>
+          <div class="stat-num">50+</div>
+          <div class="stat-label">Flavors</div>
+        </div>
+        <div>
+          <div class="stat-num">10K+</div>
+          <div class="stat-label">Happy Customers</div>
+        </div>
+        <div>
+          <div class="stat-num">4.9★</div>
+          <div class="stat-label">Rating</div>
+        </div>
+      </div>
+    </div>
+
+    <div class="hero-right">
+      <div class="hero-svg-wrap">
+        <svg width="340" height="380" viewBox="0 0 340 380" xmlns="http://www.w3.org/2000/svg">
+          <!-- Top donut - teal -->
+          <ellipse cx="240" cy="95" rx="68" ry="68" fill="#80DEEA" stroke="#fff" stroke-width="3"/>
+          <ellipse cx="240" cy="95" rx="28" ry="28" fill="#6EC6E6"/>
+          <circle class="dot-float" cx="215" cy="55" r="4.5" fill="#E91E8C"/>
+          <circle class="dot-float" cx="258" cy="48" r="3.5" fill="#F9A825"/>
+          <circle class="dot-float" cx="278" cy="72" r="4" fill="#fff" opacity="0.9"/>
+          <circle class="dot-float" cx="220" cy="128" r="3.5" fill="#A5D6A7"/>
+          <circle class="dot-float" cx="260" cy="130" r="4.5" fill="#F48FB1"/>
+          <circle class="dot-float" cx="205" cy="90" r="3.5" fill="#F9A825"/>
+
+          <!-- Middle donut - pink -->
+          <ellipse cx="205" cy="205" rx="76" ry="76" fill="#EF9A9A" stroke="#fff" stroke-width="3"/>
+          <ellipse cx="205" cy="205" rx="30" ry="30" fill="#6EC6E6"/>
+          <circle class="dot-float" cx="178" cy="155" r="4.5" fill="#fff" opacity="0.9"/>
+          <circle class="dot-float" cx="222" cy="148" r="3.5" fill="#F9A825"/>
+          <circle class="dot-float" cx="248" cy="172" r="4" fill="#80DEEA"/>
+          <circle class="dot-float" cx="162" cy="200" r="3.5" fill="#E91E8C"/>
+          <circle class="dot-float" cx="242" cy="222" r="4.5" fill="#A5D6A7"/>
+          <circle class="dot-float" cx="182" cy="240" r="3.5" fill="#F9A825"/>
+
+          <!-- Bottom big donut - pink -->
+          <ellipse cx="150" cy="308" rx="84" ry="55" fill="#F48FB1" stroke="#fff" stroke-width="3"/>
+          <ellipse cx="150" cy="308" rx="33" ry="23" fill="#6EC6E6"/>
+          <circle class="dot-float" cx="100" cy="282" r="4.5" fill="#fff" opacity="0.9"/>
+          <circle class="dot-float" cx="158" cy="272" r="3.5" fill="#F9A825"/>
+          <circle class="dot-float" cx="198" cy="292" r="4" fill="#80DEEA"/>
+          <circle class="dot-float" cx="86" cy="308" r="3.5" fill="#E91E8C"/>
+          <circle class="dot-float" cx="210" cy="318" r="3.5" fill="#A5D6A7"/>
+
+          <!-- Small yellow donut bottom left -->
+          <ellipse cx="55" cy="350" rx="50" ry="33" fill="#FFCC80" stroke="#fff" stroke-width="3"/>
+          <ellipse cx="55" cy="350" rx="20" ry="14" fill="#6EC6E6"/>
+          <circle class="dot-float" cx="28" cy="328" r="3" fill="#E91E8C"/>
+          <circle class="dot-float" cx="68" cy="320" r="2.5" fill="#80DEEA"/>
+          <circle class="dot-float" cx="90" cy="338" r="3" fill="#A5D6A7"/>
+
+          <!-- Sprinkle dots floating -->
+          <circle class="dot-float" cx="308" cy="55" r="5.5" fill="#F48FB1" opacity="0.7"/>
+          <circle class="dot-float" cx="322" cy="82" r="4.5" fill="#80DEEA" opacity="0.6"/>
+          <circle class="dot-float" cx="290" cy="38" r="3.5" fill="#FFCC80" opacity="0.7"/>
+          <circle class="dot-float" cx="155" cy="45" r="5" fill="#E91E8C" opacity="0.5"/>
+          <circle class="dot-float" cx="132" cy="78" r="4" fill="#F9A825" opacity="0.5"/>
+          <circle class="dot-float" cx="174" cy="60" r="3" fill="#A5D6A7" opacity="0.6"/>
+          <circle class="dot-float" cx="330" cy="145" r="4" fill="#F9A825" opacity="0.5"/>
+          <circle class="dot-float" cx="335" cy="175" r="3" fill="#F48FB1" opacity="0.5"/>
+        </svg>
+
+        <!-- Small donut pair below -->
+        <div style="position:absolute; bottom:0; left:0; display:flex; gap:14px; align-items:flex-end;">
+          <svg width="92" height="92" viewBox="0 0 92 92" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2))">
+            <ellipse cx="46" cy="46" rx="43" ry="43" fill="#F48FB1" stroke="#fff" stroke-width="2"/>
+            <ellipse cx="46" cy="46" rx="17" ry="17" fill="#6EC6E6"/>
+            <circle cx="30" cy="18" r="3.5" fill="#fff" opacity="0.9"/>
+            <circle cx="52" cy="15" r="3" fill="#F9A825"/>
+            <circle cx="68" cy="30" r="3" fill="#80DEEA"/>
+          </svg>
+          <svg width="80" height="80" viewBox="0 0 80 80" xmlns="http://www.w3.org/2000/svg" style="filter:drop-shadow(0 4px 10px rgba(0,0,0,0.2))">
+            <ellipse cx="40" cy="40" rx="37" ry="37" fill="#FFCC80" stroke="#fff" stroke-width="2"/>
+            <ellipse cx="40" cy="40" rx="15" ry="15" fill="#6EC6E6"/>
+            <circle cx="25" cy="15" r="3" fill="#E91E8C"/>
+            <circle cx="46" cy="12" r="2.5" fill="#80DEEA"/>
+            <circle cx="60" cy="26" r="2.5" fill="#A5D6A7"/>
+          </svg>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- BESTSELLERS -->
+  <section class="bestsellers" id="shop">
+    <div class="section-header">
+      <h2 class="section-title">Our Bestsellers <span class="badge">NEW</span></h2>
+      <p class="section-sub">Handcrafted with love, baked fresh every morning</p>
+    </div>
+    <div class="cards-grid">
+
+      <!-- Card 1 -->
+      <div class="card">
+        <div class="card-img">
+          <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="70" cy="70" rx="62" ry="62" fill="#F48FB1"/>
+            <ellipse cx="70" cy="70" rx="25" ry="25" fill="#FFF0F5"/>
+            <circle cx="44" cy="30" r="5" fill="#fff" opacity="0.9"/>
+            <circle cx="70" cy="22" r="4.5" fill="#F9A825"/>
+            <circle cx="96" cy="30" r="4.5" fill="#80DEEA"/>
+            <circle cx="110" cy="54" r="5" fill="#E91E8C"/>
+            <circle cx="36" cy="56" r="4.5" fill="#A5D6A7"/>
+            <circle cx="86" cy="108" r="4.5" fill="#fff" opacity="0.8"/>
+            <circle cx="50" cy="105" r="5" fill="#F9A825"/>
+            <circle cx="18" cy="70" r="4" fill="#80DEEA"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Strawberry Dream</div>
+          <div class="card-desc">Classic pink glaze with rainbow sprinkles</div>
+          <div class="stars">★★★★★ <span>(128 reviews)</span></div>
+          <div class="card-footer">
+            <div class="card-price">฿59</div>
+            <button class="add-btn">+ Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 2 FEATURED -->
+      <div class="card featured">
+        <div class="card-label">⭐ BESTSELLER</div>
+        <div class="card-img" style="background:#E0F7FA;">
+          <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="70" cy="70" rx="62" ry="62" fill="#80DEEA"/>
+            <ellipse cx="70" cy="70" rx="25" ry="25" fill="#E0F7FA"/>
+            <circle cx="44" cy="30" r="5" fill="#E91E8C"/>
+            <circle cx="70" cy="22" r="4.5" fill="#F9A825"/>
+            <circle cx="96" cy="30" r="4.5" fill="#F48FB1"/>
+            <circle cx="110" cy="54" r="5" fill="#A5D6A7"/>
+            <circle cx="36" cy="56" r="4.5" fill="#fff" opacity="0.9"/>
+            <circle cx="86" cy="108" r="4.5" fill="#E91E8C"/>
+            <circle cx="50" cy="106" r="5" fill="#F9A825"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Ocean Blue Bliss</div>
+          <div class="card-desc">Sky-blue glaze with pastel confetti</div>
+          <div class="stars">★★★★★ <span>(214 reviews)</span></div>
+          <div class="card-footer">
+            <div class="card-price">฿65</div>
+            <button class="add-btn">+ Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Card 3 -->
+      <div class="card">
+        <div class="card-img" style="background:#FFF8E1;">
+          <svg width="140" height="140" viewBox="0 0 140 140" xmlns="http://www.w3.org/2000/svg">
+            <ellipse cx="70" cy="70" rx="62" ry="62" fill="#FFCC80"/>
+            <ellipse cx="70" cy="70" rx="25" ry="25" fill="#FFF8E1"/>
+            <circle cx="44" cy="30" r="5" fill="#E91E8C"/>
+            <circle cx="70" cy="22" r="4.5" fill="#80DEEA"/>
+            <circle cx="96" cy="30" r="4.5" fill="#F48FB1"/>
+            <circle cx="110" cy="54" r="5" fill="#A5D6A7"/>
+            <circle cx="36" cy="56" r="4.5" fill="#E91E8C"/>
+            <circle cx="86" cy="108" r="4.5" fill="#fff" opacity="0.8"/>
+            <circle cx="50" cy="106" r="5" fill="#80DEEA"/>
+          </svg>
+        </div>
+        <div class="card-body">
+          <div class="card-name">Honey Glazed</div>
+          <div class="card-desc">Warm golden glaze, soft and fluffy</div>
+          <div class="stars">★★★★☆ <span>(97 reviews)</span></div>
+          <div class="card-footer">
+            <div class="card-price">฿55</div>
+            <button class="add-btn">+ Add to Cart</button>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+  <!-- WHY US -->
+  <section class="why-section">
+    <div class="why-card">
+      <div class="why-icon">🌾</div>
+      <div class="why-title">Fresh Ingredients</div>
+      <p class="why-text">We use only the finest, locally-sourced ingredients baked fresh every single morning for peak flavor and quality.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🎨</div>
+      <div class="why-title">Custom Orders</div>
+      <p class="why-text">Design your dream donut! Choose flavors, colors, and toppings for birthdays, events, or just because.</p>
+    </div>
+    <div class="why-card">
+      <div class="why-icon">🚀</div>
+      <div class="why-title">Fast Delivery</div>
+      <p class="why-text">Hot, fresh donuts delivered to your door in under 45 minutes. Happiness is just a tap away.</p>
+    </div>
+  </section>
+
+  <!-- CUSTOM ORDERS BANNER -->
+  <section class="custom-banner" id="custom">
+    <div>
+      <h2 class="custom-title">Create Your<br/>Dream Donut ✨</h2>
+      <p class="custom-desc">Pick any flavor, glaze, and topping combination. Perfect for birthdays, weddings, corporate events, or gifting someone special.</p>
+      <a href="#contact" class="custom-btn">Order Custom Now</a>
+    </div>
+    <div class="custom-right">
+      <div class="flavor-pill">🍓 Strawberry</div>
+      <div class="flavor-pill">🍫 Chocolate</div>
+      <div class="flavor-pill">🍋 Lemon</div>
+      <div class="flavor-pill">🥭 Mango</div>
+      <div class="flavor-pill">🍵 Matcha</div>
+      <div class="flavor-pill">🫐 Blueberry</div>
+      <div class="flavor-pill">🍦 Vanilla</div>
+      <div class="flavor-pill">🥥 Coconut</div>
+    </div>
+  </section>
+
+  <!-- FOOTER -->
+  <footer id="contact">
+    <p style="font-family:'Fredoka One',cursive; font-size:22px; margin-bottom:10px;">
+      <span class="brand">Donut Circle Sweet</span>
+    </p>
+    <p>📍 123 Sweet Street, Bangkok &nbsp;|&nbsp; 📞 02-123-4567 &nbsp;|&nbsp; 📧 hello@donutcircle.th</p>
+    <p style="margin-top:12px;">
+      <a href="#">Privacy Policy</a>
+      <a href="#">Terms</a>
+      <a href="#">Instagram</a>
+      <a href="#">Facebook</a>
+    </p>
+    <p style="margin-top:16px; color:#666; font-size:12px;">© 2026 Donut Circle Sweet · Made with ❤️ and lots of sprinkles</p>
+  </footer>
+
+  <script>
+    // Add to cart interaction
+    document.querySelectorAll('.add-btn').forEach(btn => {
+      btn.addEventListener('click', function() {
+        const badge = document.querySelector('.cart-badge');
+        badge.textContent = parseInt(badge.textContent) + 1;
+        this.textContent = '✓ Added!';
+        this.style.background = '#388E3C';
+        setTimeout(() => {
+          this.textContent = '+ Add to Cart';
+          this.style.background = '';
+        }, 1500);
+      });
+    });
+  </script>
+
+</body>
+</html>
